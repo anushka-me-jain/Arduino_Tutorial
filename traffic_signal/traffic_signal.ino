@@ -27,13 +27,14 @@ void printOnLcd(char str[],int duration ){
   
 void setup() {
   // put your setup code here, to run once:
+  pinMode(IRsensor, INPUT);
+
   lcd.begin(16, 2);
   lcd.print("Traffic Light");
   for (int i = 0; i<7; i++){
     pinMode(segments[i], OUTPUT);
   };
 
-  pinMode(IRsensor, INPUT);
   pinMode(testLed, OUTPUT);
   pinMode(rLed, OUTPUT);
   pinMode(gLed, OUTPUT);
@@ -44,17 +45,16 @@ void setup() {
 int high[] = {a, b, c, d, e, f};
 void loop() {
   // put your main code here, to run repeatedly:
-  if(digitalRead(IRsensor) == 1)
+  if(digitalRead(IRsensor) == 0)
   {
     digitalWrite(testLed, 1);
-    delay(100);
+    delay(500);
   }
   else
   {
     digitalWrite(testLed, 0);
-    delay(100);
+    delay(500);
   }
-
   digitalWrite(a, 0);
   digitalWrite(b, 0);
   digitalWrite(c, 0);
@@ -66,13 +66,15 @@ void loop() {
   glowLed(rLed, gLed, yLed);
   printOnLcd("Stop..", 300);
   
+
   digitalWrite(a, 1);
-  digitalWrite(b, 0);
+  digitalWrite(b, 0);                               //FOR 1
   digitalWrite(c, 0);
   digitalWrite(d, 1);
   digitalWrite(e, 1);
   digitalWrite(f, 1);
   digitalWrite(g, 1);
+
 
   glowLed(gLed, rLed, yLed);
   printOnLcd("Ready..", 200);
